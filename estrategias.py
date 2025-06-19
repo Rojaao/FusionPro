@@ -1,3 +1,4 @@
+
 def estrategia_6em7digit(digitos):
     return sum(1 for d in digitos[-7:] if d <= 3) >= 6
 
