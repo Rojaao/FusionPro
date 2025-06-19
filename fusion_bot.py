@@ -1,0 +1,3 @@
+# Lógica do robô (conexão WebSocket, envio de ordens, etc)
+
+# ...
