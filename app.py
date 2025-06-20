@@ -28,10 +28,6 @@ col1, col2 = st.columns(2)
 start = col1.button("🚀 Iniciar Robô")
 stop = col2.button("🛑 Parar Robô")
 
-log_area = st.empty()
-status_area = st.empty()
-hist_area = st.empty()
-
 def iniciar_bot():
     st.session_state.bot = FusionBot(
         token=token,
@@ -46,14 +42,12 @@ def iniciar_bot():
     st.session_state.bot.iniciar()
 
 def monitorar_bot():
+    container = st.empty()
     while st.session_state.bot and st.session_state.bot.running:
-        logs = st.session_state.bot.logs
-        status_area.info(f"📊 Status: {'Rodando' if st.session_state.bot.rodando else 'Parado'}")
-        log_text = "### 📜 Logs do robô (últimos passos):\n" + "\n".join(logs[-10:])
-        log_area.markdown(log_text.replace("\n", "<br>"), unsafe_allow_html=True)
-        hist_area.markdown("### 📈 Histórico de operações (últimas 10):")
-        if st.session_state.bot.historico_operacoes:
-            hist_area.table(st.session_state.bot.historico_operacoes[-10:])
+        with container.container():
+            st.info(f"📊 Status: {'Rodando' if st.session_state.bot.rodando else 'Parado'}")
+            st.write("Histórico de operações (últimas 10):")
+            st.table(st.session_state.bot.historico_operacoes[-10:])
         time.sleep(2)
 
 if start and token:
