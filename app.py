@@ -49,7 +49,8 @@ def monitorar_bot():
     while st.session_state.bot and st.session_state.bot.running:
         logs = st.session_state.bot.logs
         status_area.info(f"📊 Status: {'Rodando' if st.session_state.bot.rodando else 'Parado'}")
-        log_area.markdown("### 📜 Logs do robô (últimos passos):\n" + "\n".join(logs[-10:]), unsafe_allow_html=True)
+        log_text = "### 📜 Logs do robô (últimos passos):\n" + "\n".join(logs[-10:])
+        log_area.markdown(log_text.replace("\n", "<br>"), unsafe_allow_html=True)
         hist_area.markdown("### 📈 Histórico de operações (últimas 10):")
         if st.session_state.bot.historico_operacoes:
             hist_area.table(st.session_state.bot.historico_operacoes[-10:])
